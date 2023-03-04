@@ -4,13 +4,11 @@
  */
 package com.Plantilla;
 
-import com.Plantilla.Personajes.Man;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -64,13 +62,14 @@ public class Historio implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         stage.act();
         stage.draw();
-        if(Gdx.input.justTouched()) {
-			mensajeActual++;
-			if(mensajeActual == mensajes.length) {
-				mensajeActual--;
-				game.setScreen(new MainScreen(game));
-			}
-		}
+        
+        if(Gdx.input.justTouched()){
+            mensajeActual++;
+            if(mensajeActual == mensajes.length) {
+                mensajeActual--;
+                game.setScreen(new Nivel2(game));
+            }
+	}
 
         this.game.batch.begin();
         this.game.font.draw(game.batch, mensajes[mensajeActual], 120, 400, 320, Align.center, false);

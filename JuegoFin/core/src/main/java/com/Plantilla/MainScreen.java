@@ -257,7 +257,7 @@ public class MainScreen implements Screen {
     
     public void comprobarMuerto(){
         
-        if(this.man.isMuerto()){
+        if(this.man.isMuerto() || this.man.comprobarMuerte()){
             this.juego.puntajes.add(this.puntos);
            // this.juego.puntuaciones.guardarPuntuaciones(  this.juego.puntajes); 
             this.juego.setScreen(new Perdiste(juego));

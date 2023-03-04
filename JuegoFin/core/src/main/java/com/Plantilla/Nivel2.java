@@ -24,6 +24,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Align;
 import java.util.ArrayList;
 
 /**
@@ -53,20 +54,22 @@ public class Nivel2 implements Screen {
     int pegado ; 
     ReyCerdo rey; 
     Canon canon; 
-    String[] dialogos ={"Rey Man: Devuelveme mi comida!", "\nRey Cerdo: Esa comida que tanto quieres era mi hermano, \nllevabamos dias buscandolo" ,
-                        "Rey Man: No lo sabia" , "Rey Cerdo: ya es tarde *se muere*"
+    String[] dialogos ={"Rey Man: Devuelveme mi comida!", "\nRey Cerdo: Esa comida que \ntanto quieres era mi hermano" ,
+                        "Rey Man: No lo sabia" , "\nRey Cerdo: ya es tarde *se muere*"
                 };
+    int mensajeActual; 
+    boolean Final ; 
     
     public Nivel2(MyGdxGame g){
         this.juego = g; 
         this.man = MyGdxGame.man;
-
+        this.mensajeActual =0;
         vida =3; 
         this.inicioCerdo2 = true; 
         this.juego = g; 
         menu = new Rectangle(0, 19, 24, 64);
         touchPoint = new Vector3();
-      
+        this.Final = false; 
         this.comida = new Comida[5];
         pegado=0; 
         
@@ -231,16 +234,36 @@ public class Nivel2 implements Screen {
     @Override
     public void render(float delta) {
         
-        this.comprobarMuerto();
+        if(Final){
+         
+            if(Gdx.input.justTouched()) {
+
+                if(mensajeActual == dialogos.length) {
+                    mensajeActual--;
+                    juego.setScreen(new Inicio(juego));
+                }
+                  System.out.println("mensajes "+  mensajeActual);
+               this.juego.batch.begin();
+               this.juego.font.draw(juego.batch, dialogos[mensajeActual], 500, 400, 320, Align.center, false);
+
+               this.juego.batch.end();
+               mensajeActual++; 
+           }
+        }
+        else{
+             this.comprobarMuerto();
+        
         this.compruebaSeguimiento();
         this.perseguir(delta);
         anterior = 0; 
         this.pegarMan();
-       
+        this.comprobarEnemigosPegarMan(); 
         this.comprabarGolpes();
         this.menu(); 
+        }
+       
         this.posicionarCamara();
-        this.comprobarEnemigosPegarMan();  
+         
         this.pintarStatusJuego();
         stage.act(delta);
         stage.draw();
@@ -268,6 +291,7 @@ public class Nivel2 implements Screen {
         }
     }
     public void comprobarEnemigosPegarMan(){
+        this.collisionCanon();
         this.comprobarCollisionEnemigo();
         this.comprobarCollisionEnemigo2();
         this.comprobarCollisionEnemigo3();
@@ -279,7 +303,7 @@ public class Nivel2 implements Screen {
     }
     public void comprobarMuerto(){
         
-        if(this.man.isMuerto()){
+        if(this.man.isMuerto() || this.man.comprobarMuerte()){
             this.juego.puntajes.add(this.puntos);
            // this.juego.puntuaciones.guardarPuntuaciones(  this.juego.puntajes); 
             this.juego.setScreen(new Perdiste(juego));
@@ -340,7 +364,7 @@ public class Nivel2 implements Screen {
     public void perseguir(float delta){
         
         if(this.man.getX() >= 16){
-            System.out.println("perseguir ");
+            
             this.inicioCerdo2 = false;
            if((this.enemigo2.getY() == this.man.getY()) && (this.man.getX() == this.enemigo2.getX() )){
               this.enemigo2.miraDerecha= true; 
@@ -367,19 +391,28 @@ public class Nivel2 implements Screen {
             } 
         }
         if((this.inicioCerdo2 == false) && (this.man.getX() < 16) ){
-           System.out.println("dar vueltas");
+          
             this.enemigo2.darVueltas(delta); 
         }
         
     }
     public void nivelTerminadoDialogo(){
         
+       
+        
+        
+
+        
     }
     public void collisionCanon(){
-        if(man.dimensiones().overlaps(canon.dimensiones())){
+        if(man.dimensiones().overlaps(canon.dimensiones()) && Final== false){
             if(this.man.getPegar() == true){
                 canon.remove(); 
-                this.nivelTerminadoDialogo();
+                
+                this.Final = true; 
+               
+               
+              
             }
         }
     }
