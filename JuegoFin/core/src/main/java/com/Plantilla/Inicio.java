@@ -32,7 +32,7 @@ public class Inicio  implements Screen {
         Rectangle ayuda; 
         Vector3 touchPoint;
         Rectangle jugar; 
-        Music musica; 
+        
         
 
         public Inicio(final MyGdxGame game){
@@ -50,8 +50,8 @@ public class Inicio  implements Screen {
             ayuda = new Rectangle(500, 95, 134, 20);
             jugar = new Rectangle(500, 50, 134, 20);
             
-            // this.musica = Gdx.audio.newMusic(Gdx.files.internal("Sonidos/musica.mp3"));
-             //this.musica.setLooping(true);
+             
+            
         }
 
 	@Override
@@ -85,7 +85,10 @@ public class Inicio  implements Screen {
 			dispose();
             }
 	}
-          //  this.musica.play(); 
+            if(MyGdxGame.SONIDO){
+               MyGdxGame.musica.play(); 
+            }
+            
     }
     @Override
     public void show() {

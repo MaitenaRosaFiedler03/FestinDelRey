@@ -31,6 +31,9 @@ public class MyGdxGame extends Game {
     public static int modoJuego;
     public Puntuaciones puntuaciones; 
     public ArrayList<Integer> puntajes; 
+    public static boolean SONIDO = true; 
+    public static Music musica; 
+    
     
 	public void create() {
             batch = new SpriteBatch();
@@ -38,6 +41,7 @@ public class MyGdxGame extends Game {
             this.setScreen(new Inicio(this));
             //puntuaciones = new Puntuaciones(); 
             this.puntajes = new ArrayList<>(); 
+            this.musica = Gdx.audio.newMusic(Gdx.files.internal("Sonidos/musica.mp3"));
            
 	}
 }

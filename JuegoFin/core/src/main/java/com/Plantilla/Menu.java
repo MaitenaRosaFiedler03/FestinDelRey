@@ -7,6 +7,7 @@ package com.Plantilla;
 import com.Plantilla.PantallasAyuda.Ayuda;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,11 +30,15 @@ public class Menu implements Screen {
         Stage stage; 
         Rectangle sonido, volver, salir; 
         Vector3 touchPoint;
-        
-        
+        Texture sonidos; 
+        String estadoSound;
+        boolean estado;
+        Music musica; 
 
-        public Menu(final MyGdxGame game){
+        public Menu(final MyGdxGame game ){
+            estado = true; 
             this.game = game; 
+            this.musica = musica ; 
             camera = new OrthographicCamera();
             camera.setToOrtho(false, 800, 480);
             testTable = new Table();
@@ -43,10 +48,12 @@ public class Menu implements Screen {
             stage = new Stage();
             stage.addActor(testTable);
             touchPoint = new Vector3();
+            estadoSound= "soundOn.png"; 
             
-            sonido = new Rectangle(500, 500, 84, 20);
-            volver = new Rectangle(170, 450, 84, 30);
-            salir = new Rectangle(350, 500, 84, 20);
+            sonido = new Rectangle(370, 150, 64, 64);
+            volver = new Rectangle(345, 270, 64, 64);
+            salir = new Rectangle(350, 200, 64, 44);
+            sonidos = new Texture (Gdx.files.internal(estadoSound)); 
         }
 
 	@Override
@@ -60,10 +67,11 @@ public class Menu implements Screen {
                 
                 this.game.batch.begin();
                 
-                this.game.font.draw(game.batch,"VOLVER", 170, 450);
-                 this.game.font.draw(game.batch,"SALIR",350, 280);
+                this.game.font.draw(game.batch,"VOLVER", 345, 300);
+                this.game.font.draw(game.batch,"SALIR",350, 250);
+                this.game.batch.draw(sonidos,370, 150 ); 
                 this.game.batch.end(); 
-
+                 sonidos = new Texture (Gdx.files.internal(estadoSound)); 
 		
                 
             if (Gdx.input.justTouched()) {
@@ -71,13 +79,29 @@ public class Menu implements Screen {
             System.out.println("y : " + touchPoint.y + " x: " + touchPoint.x);
             if (volver.contains(touchPoint.x, touchPoint.y)) {
                     
-                System.out.println("volveeeeeeeeeeeeeeeeeeee");
-                    //game.setScreen(new MainScreen(game));
-			//dispose();
+                  game.setScreen(new MainScreen(game));
+			dispose();
                  
             }
             if (salir.contains(touchPoint.x, touchPoint.y)) {
-                  System.out.println("salirrrrrrrrrrrrrrrrrrrrrrrrrrr");
+                 game.setScreen(new Inicio(game));
+			dispose();
+            }
+            if (sonido.contains(touchPoint.x, touchPoint.y)) {
+                if(estado == false){
+                    this.estadoSound = "soundOn.png"; 
+                    MyGdxGame.SONIDO = true; 
+                    System.out.println("a");
+                    estado= true;
+                     MyGdxGame.musica.play();
+                }
+                else if(estado){
+                    this.estadoSound = "soundOff.png"; 
+                    MyGdxGame.SONIDO = false; 
+                    System.out.println("a");
+                    estado= false;
+                    MyGdxGame.musica.stop();
+                }
             }
 	}
     }

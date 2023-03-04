@@ -177,8 +177,6 @@ public class MainScreen implements Screen {
                 this.puntos += 15;  
               
             }
-            
-            
         }
     }
     void comprobarGolpeEnemigo3(){
@@ -190,8 +188,6 @@ public class MainScreen implements Screen {
                 this.puntos += 15;  
               
             }
-            
-            
         }
     }
     void finalNivel(){
@@ -370,6 +366,7 @@ public class MainScreen implements Screen {
             if (menu.contains(touchPoint.x, touchPoint.y)) {
                 //Assets.playSound(Assets.clickSound);
                 juego.setScreen(new Menu(juego));
+                
                 return; 
 
             }
