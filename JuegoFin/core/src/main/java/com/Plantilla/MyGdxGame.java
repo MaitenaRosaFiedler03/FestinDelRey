@@ -40,7 +40,7 @@ public class MyGdxGame extends Game {
             batch = new SpriteBatch();
             font = new BitmapFont(Gdx.files.internal("font.fnt"), Gdx.files.internal("font.png"), false); 
             this.setScreen(new Inicio(this));
-            //puntuaciones = new Puntuaciones(); 
+            puntuaciones = new Puntuaciones(); 
             this.puntajes = new ArrayList<>(); 
             this.musica = Gdx.audio.newMusic(Gdx.files.internal("Sonidos/musica.mp3"));
             this.nivel = 1; 

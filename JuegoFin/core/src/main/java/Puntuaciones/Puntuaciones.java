@@ -43,7 +43,7 @@ public class Puntuaciones {
     private Element raiz;  
     private Element nodoPuntos;  
     private Document document; 
-    
+    String archivo = "C:\\Users\\maite\\OneDrive\\Escritorio\\DAM\\FestinDelRey\\JuegoFin\\assets\\Info\\puntos.xml"; 
     
     public Puntuaciones(){
         
@@ -56,7 +56,7 @@ public class Puntuaciones {
         this.factory = DocumentBuilderFactory.newInstance();
         this.builder = factory.newDocumentBuilder();
 			
-        this.document = this.builder.parse(new File("Info/puntos.xml")); 
+        this.document = this.builder.parse(new File("")); 
 
  
       //Excepciones en la creacion del documento u errores de lectura  
@@ -80,7 +80,7 @@ public class Puntuaciones {
             this.dom = builder.getDOMImplementation();
             this.doc = (Document) this.dom.createDocument(null,  "Sistema", null);
             this.source = new DOMSource(this.doc);
-            this.resultado = new StreamResult(new File("Info/puntos.xml"));
+            this.resultado = new StreamResult(new File(archivo));
                            
          } catch (ParserConfigurationException pce){
                 pce.printStackTrace();
