@@ -37,26 +37,31 @@ public class MainScreen implements Screen {
     Vector3 touchPoint;
     int puntos; 
     Man man; 
+    int vida;
     Cerdo1 enemigo; 
     Cerdo2 enemigo2;
     Cerdo3 enemigo3; 
     int anterior; 
     ArrayList<Texture> vidas; 
     Comida[] comida; 
-    boolean inicioCerdo2; 
+    boolean inicioCerdo2;
+    int pegado ; 
     
   
     
     public MainScreen(MyGdxGame pantalla){
-        
-       this.inicioCerdo2 = true; 
+        vida =3; 
+        this.inicioCerdo2 = true; 
         this.juego = pantalla; 
         menu = new Rectangle(0, 19, 24, 64);
         touchPoint = new Vector3();
         this.puerta = new Puerta(); 
         this.comida = new Comida[5];
+        pegado=0; 
+        
         for (int i = 0; i < 5; i++) {
             this.comida[i] = new Comida(); 
+           
         }
         this.vidas = new ArrayList<>(); 
         for (int i = 0; i < 3; i++) {
@@ -131,17 +136,45 @@ public class MainScreen implements Screen {
     void comprobarCollisionEnemigo(){
         
         if(enemigo.dimensiones().overlaps(man.dimensiones())){
-            this.enemigo.gritar();
-            this.enemigo.setxVelocity(0f);
-            this.enemigo.setPegar(true);  
+            if(MyGdxGame.modoJuego == 0){
+                this.enemigo.gritar();
+                this.enemigo.setxVelocity(0f);
+                this.enemigo.setPegar(true);
+                if(pegado == 0){
+                    this.vidas.remove(vidas.size() -1 ); 
+                    pegado++; 
+                    vida--; 
+                }
+                
+                
+                
+            }else{
+                
+                this.enemigo.gritar();
+                this.enemigo.setxVelocity(0f);
+                this.enemigo.setPegar(true);
+                this.man.setMuerto(true);
+            }
+            
         }
     }
-      void comprobarCollisionEnemigo2(){
+    void comprobarCollisionEnemigo2(){
           
         if(enemigo2.dimensiones().overlaps(man.dimensiones())){
-            this.enemigo2.gritar();
-            this.enemigo2.setxVelocity(0f);
-            this.enemigo2.setPegar(true);
+            if(MyGdxGame.modoJuego == 0){
+                this.enemigo2.gritar();
+                this.enemigo2.setxVelocity(0f);
+                this.enemigo2.setPegar(true);
+                this.vidas.remove(vidas.size()-1 ); 
+                vida--; 
+                
+            }else{
+                this.enemigo2.gritar();
+                this.enemigo2.setxVelocity(0f);
+                this.enemigo2.setPegar(true);
+                this.man.setMuerto(true);
+            }
+            
         }
     }
     void comprobarCollisionEnemigo3(){
@@ -199,26 +232,21 @@ public class MainScreen implements Screen {
     @Override
     public void render(float delta) {
         
-        this.compruebaSeg();
-
+        this.comprobarMuerto();
+        this.compruebaSeguimiento();
         this.perseguir(delta);
         anterior = 0; 
         this.pegarMan();
         this.generarComida();
         this.comprabarGolpes();
-
         this.finalNivel();
         this.menu(); 
-
-        
         this.posicionarCamara();
-
-        this.comprobarCollisionEnemigo();     
+        this.comprobarEnemigosPegarMan();  
         this.pintarStatusJuego();
         stage.act(delta);
         stage.draw();
-
-        this.comprobarMuerto();
+        
         this.man.setPegar(false);
        
     }
@@ -229,9 +257,10 @@ public class MainScreen implements Screen {
     }
     
     public void comprobarMuerto(){
-        if(this.man.comprobarMuerte()){
+        
+        if(this.man.isMuerto()){
             this.juego.puntajes.add(this.puntos);
-            this.juego.puntuaciones.guardarPuntuaciones(  this.juego.puntajes); 
+           // this.juego.puntuaciones.guardarPuntuaciones(  this.juego.puntajes); 
             this.juego.setScreen(new Perdiste(juego));
                         
             this.man.remove();
@@ -257,8 +286,13 @@ public class MainScreen implements Screen {
             
             
             this.juego.batch.draw(vidas.get(0), 500, 450, 30, 30);
-            this.juego.batch.draw(vidas.get(1), 525, 450, 30, 30);    
-            this.juego.batch.draw(vidas.get(2), 545, 450, 30, 30);
+            if(vidas.size() >= 2){
+                this.juego.batch.draw(vidas.get(1), 525, 450, 30, 30);
+            }
+            if(vidas.size() == 3){
+                 this.juego.batch.draw(vidas.get(2), 545, 450, 30, 30);
+            } 
+           
 
         this.juego.batch.end();   
     }
@@ -317,7 +351,7 @@ public class MainScreen implements Screen {
         }
         
     }
-    public void compruebaSeg(){
+    public void compruebaSeguimiento(){
        
         if(this.man.getX() > this.enemigo2.getX()){
             enemigo2.miraDerecha = true;

@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -65,7 +64,7 @@ public class Nivel2 implements Screen {
         stage.getViewport().setCamera(camera);
         puntos =0; 
         
-        this.enemigo  = new Cerdo1();
+        /*this.enemigo  = new Cerdo1();
         this.enemigo.layer = (TiledMapTileLayer) map.getLayers().get("principal");
         this.enemigo.setPosition(15, 7);
         stage.addActor(this.enemigo);
@@ -74,7 +73,7 @@ public class Nivel2 implements Screen {
         this.enemigo2.layer = (TiledMapTileLayer) map.getLayers().get("principal");
         this.enemigo2.setPosition(20, 13);
         stage.addActor(this.enemigo2);
-        
+        */
         
     }
     void comprobarCollision(){
@@ -88,7 +87,7 @@ public class Nivel2 implements Screen {
     @Override
     public void render(float delta) {
         
-        this.compruebaSeg();
+        //this.compruebaSeg();
          this.menu(); 
         Gdx.gl.glClearColor(0f, 0f, 0.0f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -104,8 +103,8 @@ public class Nivel2 implements Screen {
  
         
         this.comprobarCollision();
-        
-        if(this.man.comprobarMuerte()){
+    }
+        /*(this.man.comprobarMuerte()){
             this.juego.setScreen(new Perdiste(juego));
                         
             dispose();
@@ -139,6 +138,8 @@ public class Nivel2 implements Screen {
     /**
      *
      */
+        
+    @Override
     public void hide() {
     }
 
@@ -169,5 +170,10 @@ public class Nivel2 implements Screen {
             }
             
         }
+    }
+
+    @Override
+    public void dispose() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -98,16 +98,22 @@ public class Man extends Image {
         
        tiempoPegar = 1f; 
     }
-    public boolean comprobarMuerte(){
+    public void comprobarMuerte(){
         
         muerto = false;
         if(this.getY() < 0){
             muerto = true;
-         
         }
-        return muerto; 
     }
 
+    public boolean isMuerto() {
+        return muerto;
+    }
+
+    public void setMuerto(boolean muerto) {
+        this.muerto = muerto;
+    }
+    
     public int getVida() {
         return vida;
     }
