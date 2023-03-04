@@ -5,7 +5,6 @@
 package com.Plantilla.PantallasAyuda;
 
 import com.Plantilla.MyGdxGame;
-import com.Plantilla.PantallasAyuda.Ayuda2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -51,7 +50,7 @@ public class Ayuda1  implements Screen{
             touchPoint = new Vector3();
             
             flecha = new Texture(Gdx.files.internal("adelante.png"));
-             game.batch.begin();
+            game.batch.begin();
             game.batch.draw(flecha, 480 , 0, 64, 64);
             game.batch.end();
     }

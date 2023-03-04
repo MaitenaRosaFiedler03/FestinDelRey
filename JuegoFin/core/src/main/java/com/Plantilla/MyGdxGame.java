@@ -5,6 +5,7 @@
 package com.Plantilla;
 
 import Puntuaciones.Puntuaciones;
+import com.Plantilla.Personajes.Man;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -29,8 +30,10 @@ public class MyGdxGame extends Game {
     public static int modoJuego;
     public Puntuaciones puntuaciones; 
     public ArrayList<Integer> puntajes; 
-    public static boolean SONIDO = true; 
+    public static boolean SONIDO = false; 
     public static Music musica; 
+    public static int nivel; 
+    public static Man man; 
     
     
 	public void create() {
@@ -40,6 +43,8 @@ public class MyGdxGame extends Game {
             //puntuaciones = new Puntuaciones(); 
             this.puntajes = new ArrayList<>(); 
             this.musica = Gdx.audio.newMusic(Gdx.files.internal("Sonidos/musica.mp3"));
-           
+            this.nivel = 1; 
+            this.man = new Man(); 
+            
 	}
 }

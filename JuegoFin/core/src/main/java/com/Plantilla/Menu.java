@@ -24,68 +24,75 @@ import com.badlogic.gdx.utils.ScreenUtils;
  */
 public class Menu implements Screen {
     
-        final MyGdxGame game ; 
-        final OrthographicCamera camera;
-        Table testTable;
-        Stage stage; 
-        Rectangle sonido, volver, salir; 
-        Vector3 touchPoint;
-        Texture sonidos; 
-        String estadoSound;
-        boolean estado;
-        Music musica; 
+    final MyGdxGame game ; 
+    final OrthographicCamera camera;
+    Table testTable;
+    Stage stage; 
+    Rectangle sonido, volver, salir; 
+    Vector3 touchPoint;
+    Texture sonidos; 
+    String estadoSound;
+    boolean estado;
+    Music musica; 
 
-        public Menu(final MyGdxGame game ){
-            estado = true; 
-            this.game = game; 
-            this.musica = musica ; 
-            camera = new OrthographicCamera();
-            camera.setToOrtho(false, 800, 480);
-            testTable = new Table();
-            testTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("fondo.png"))));
-            testTable.setFillParent(true);
-            testTable.setDebug(true);
-            stage = new Stage();
-            stage.addActor(testTable);
-            touchPoint = new Vector3();
-            estadoSound= "soundOn.png"; 
-            
-            sonido = new Rectangle(370, 150, 64, 64);
-            volver = new Rectangle(345, 270, 64, 64);
-            salir = new Rectangle(350, 200, 64, 44);
-            sonidos = new Texture (Gdx.files.internal(estadoSound)); 
-        }
+    public Menu(final MyGdxGame game ){
+        estado = true; 
+        this.game = game; 
+        this.musica = MyGdxGame.musica ; 
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        testTable = new Table();
+        testTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("fondo.png"))));
+        testTable.setFillParent(true);
+        testTable.setDebug(true);
+        stage = new Stage();
+        stage.addActor(testTable);
+        touchPoint = new Vector3();
+        estadoSound= "soundOn.png"; 
 
-	@Override
-	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0.2f, 1);
+        sonido = new Rectangle(370, 150, 64, 64);
+        volver = new Rectangle(345, 270, 64, 64);
+        salir = new Rectangle(350, 200, 64, 44);
+        sonidos = new Texture (Gdx.files.internal(estadoSound)); 
+    }
 
-		camera.update();
-		game.batch.setProjectionMatrix(camera.combined);
-                stage.act();
-                stage.draw();
-                
-                this.game.batch.begin();
-                
-                this.game.font.draw(game.batch,"VOLVER", 345, 300);
-                this.game.font.draw(game.batch,"SALIR",350, 250);
-                this.game.batch.draw(sonidos,370, 150 ); 
-                this.game.batch.end(); 
-                 sonidos = new Texture (Gdx.files.internal(estadoSound)); 
-		
-                
-            if (Gdx.input.justTouched()) {
+    @Override
+    public void render(float delta) {
+        ScreenUtils.clear(0, 0, 0.2f, 1);
+
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
+        stage.act();
+        stage.draw();
+
+        this.game.batch.begin();
+
+        this.game.font.draw(game.batch,"VOLVER", 345, 300);
+        this.game.font.draw(game.batch,"SALIR",350, 250);
+        this.game.batch.draw(sonidos,370, 150 ); 
+        this.game.batch.end(); 
+         sonidos = new Texture (Gdx.files.internal(estadoSound)); 
+
+
+        if (Gdx.input.justTouched()) {
             camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             System.out.println("y : " + touchPoint.y + " x: " + touchPoint.x);
             if (volver.contains(touchPoint.x, touchPoint.y)) {
-                    
-                  game.setScreen(new MainScreen(game));
-			dispose();
-                 
+
+               if(MyGdxGame.nivel ==1 ){
+                    game.setScreen(new MainScreen(game));
+                    dispose();
+               }
+               else if(MyGdxGame.nivel ==2 ){
+                    game.setScreen(new Nivel2(game));
+                    dispose();
+               }
+
+
             }
             if (salir.contains(touchPoint.x, touchPoint.y)) {
                  game.setScreen(new Inicio(game));
-			dispose();
+                        dispose();
             }
             if (sonido.contains(touchPoint.x, touchPoint.y)) {
                 if(estado == false){
@@ -101,7 +108,7 @@ public class Menu implements Screen {
                     MyGdxGame.musica.stop();
                 }
             }
-	}
+        }
     }
     @Override
     public void show() {

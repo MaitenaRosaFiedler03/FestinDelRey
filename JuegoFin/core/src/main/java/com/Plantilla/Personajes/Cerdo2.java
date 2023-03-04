@@ -178,70 +178,43 @@ public class Cerdo2 extends Image {
 
         yVelocity = yVelocity + GRAVITY;
 
-          float x = this.getX();
-          float y = this.getY();
-          if(choco == false){
-              xChange = xVelocity * delta;
-          }
-          
-           yChange = yVelocity * delta;
+        float x = this.getX();
+        float y = this.getY();
+        if(choco == false){
+            xChange = xVelocity * delta;
+        }
+
+         yChange = yVelocity * delta;
 
 
-          if (canMoveTo(x + xChange, y) == false) {
-            this.xVelocity = 0; 
-            this.miraDerecha = false;
-            this.choco = true; 
-          } 
-          if (canMoveTo(x - xChange, y) == false) {
-            this.xVelocity = 0 ; 
-            this.miraDerecha = true;
-            this.choco = true; 
-          } 
-          
-          
-          if (canMoveTo(x, y + yChange) == false) {
-                
-              yVelocity = yChange = 0;
-          }
-          this.setPosition(x + xChange, y + yChange);
+        if (canMoveTo(x + xChange, y) == false) {
+          this.xVelocity = 0; 
+          this.miraDerecha = false;
+          this.choco = true; 
+        } 
+        if (canMoveTo(x - xChange, y) == false) {
+          this.xVelocity = 0 ; 
+          this.miraDerecha = true;
+          this.choco = true; 
+        } 
 
-          if (Math.abs(xVelocity) < 0.5f) {
-              xVelocity = 0;
-          }
-           yVelocity = yVelocity + GRAVITY;
+
+        if (canMoveTo(x, y + yChange) == false) {
+
+            yVelocity = yChange = 0;
+        }
+        this.setPosition(x + xChange, y + yChange);
+
+        if (Math.abs(xVelocity) < 0.5f) {
+            xVelocity = 0;
+        }
+         yVelocity = yVelocity + GRAVITY;
     }
     
     public void darVueltas(float delta){
         time += delta; 
-          yVelocity = yVelocity + GRAVITY;
-        
-        float x = this.getX();
-        float y = this.getY();
-        xChange = xVelocity * delta;
-        yChange = yVelocity * delta;
-        
-      
-            if ( xChange <= 17 ) {
-               this.xVelocity = VELOCIDAD; 
-                System.out.println(" xChange : " + this.xChange);
-                this.miraDerecha = true;
-                
-            } 
-            if (canMoveTo(x - xChange, y) == false) {
-                
-                this.xVelocity = -VELOCIDAD; 
-               this.miraDerecha = false; 
-            } 
-        
-            if (canMoveTo(x, y + yChange) == false) {
-
-                yVelocity = yChange = 0;
-            }
-            this.setPosition(x + xChange, y + yChange);
-
-            if (Math.abs(xVelocity) < 0.5f) {
-                xVelocity = 0;
-            }
+        this.xChange =0; 
+        this.xVelocity =0; 
        
     }
     public boolean getChoco() {

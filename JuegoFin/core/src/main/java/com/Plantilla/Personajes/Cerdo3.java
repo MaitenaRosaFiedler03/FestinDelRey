@@ -222,7 +222,5 @@ public class Cerdo3 extends Image {
 
         return true;
     }
-     
-     
     
 }

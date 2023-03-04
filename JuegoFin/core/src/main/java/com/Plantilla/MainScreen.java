@@ -102,10 +102,11 @@ public class MainScreen implements Screen {
     }
     public void crearMan(){
         
-        this.man  = new Man();
+        this.man  = MyGdxGame.man;
         this.man.layer = (TiledMapTileLayer) map.getLayers().get("ventana");
         this.man.setPosition(5, 10);
         stage.addActor(this.man);
+        this.man.setMuerto(false);
     }
     public void crearFinal(){
         
@@ -145,9 +146,7 @@ public class MainScreen implements Screen {
                     pegado++; 
                     vida--; 
                 }
-                
-                
-                
+               
             }else{
                 
                 this.enemigo.gritar();
@@ -225,7 +224,7 @@ public class MainScreen implements Screen {
     }
     void finalNivel(){
         if(this.man.dimensiones().overlaps(this.puerta.dimensiones())){
-           this.juego.setScreen(new Nivel2(this.juego, this.man));
+           this.juego.setScreen(new Nivel2(this.juego));
         }
     }
 
@@ -252,7 +251,7 @@ public class MainScreen implements Screen {
     }
     public void comprobarEnemigosPegarMan(){
         this.comprobarCollisionEnemigo();
-        this.comprobarCollisionEnemigo2();
+       // this.comprobarCollisionEnemigo2();
         this.comprobarCollisionEnemigo3();
     }
     
@@ -306,8 +305,8 @@ public class MainScreen implements Screen {
             camera.position.x = 22; 
             camera.update();
         }
-        if(this.man.getX() > 46){
-            camera.position.x = 46; 
+        if(this.man.getX() > 30){
+            camera.position.x = 30; 
             camera.update();
         }
             
@@ -319,7 +318,7 @@ public class MainScreen implements Screen {
     public void perseguir(float delta){
         
         if(this.man.getX() >= 16){
-            System.out.println("perseguir ");
+           
             this.inicioCerdo2 = false;
            if((this.enemigo2.getY() == this.man.getY()) && (this.man.getX() == this.enemigo2.getX() )){
               this.enemigo2.miraDerecha= true; 
@@ -337,7 +336,7 @@ public class MainScreen implements Screen {
                  this.enemigo2.moverse(delta);
 
                    if(this.man.getY() > this.enemigo2.getY() ){
-                        this.enemigo2.yVelocity = this.enemigo2.yVelocity + this.enemigo2.VELOCIDAD* 2.2f;
+                        this.enemigo2.yVelocity = 0; 
                    }
 
                 if((this.man.getX() < this.enemigo2.getX())){
@@ -346,7 +345,7 @@ public class MainScreen implements Screen {
             } 
         }
         if((this.inicioCerdo2 == false) && (this.man.getX() < 16) ){
-           System.out.println("dar vueltas");
+           
             this.enemigo2.darVueltas(delta); 
         }
         
@@ -386,7 +385,10 @@ public class MainScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        camera.setToOrtho(false, 20 * width / height, 20);
+        if((width > 0 ) && (height > 0)){
+            camera.setToOrtho(false, 20 * width / height, 20);
+        }
+        
     }
 
     @Override
