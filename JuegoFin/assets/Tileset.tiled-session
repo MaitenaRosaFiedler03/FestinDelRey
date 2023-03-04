@@ -1,0 +1,68 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "nivel1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Cerdo1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "G.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Puerta.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tile.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "nivel1.tmx": {
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.7534687499999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 800.2986188876448,
+                "y": 215.66919663224257
+            }
+        },
+        "nivel2.tmx": {
+            "scale": 0.42147253787878786,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1109.2063135426615,
+                "y": 321.49188339043985
+            }
+        }
+    },
+    "last.imagePath": "C:/Users/maite/OneDrive/Documentos/NetBeansProjects/JuegoFin/assets/cerdo1/parado",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 66,
+    "openFiles": [
+        "nivel1.tmx",
+        "Tile.tsx",
+        "Puerta.tsx",
+        "G.tsx",
+        "nivel2.tmx",
+        "Cerdo1.tsx"
+    ],
+    "project": "Tileset.tiled-project",
+    "recentFiles": [
+        "Cerdo1.tsx",
+        "nivel2.tmx",
+        "G.tsx",
+        "Puerta.tsx",
+        "Tile.tsx",
+        "nivel1.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
