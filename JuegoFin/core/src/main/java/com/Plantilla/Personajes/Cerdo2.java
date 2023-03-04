@@ -31,15 +31,25 @@ public class Cerdo2 extends Image {
     boolean pegar ; 
     public boolean miraDerecha; 
     Sound hit; 
-    public final float VELOCIDAD = 2.5f;
+    public final float VELOCIDAD_FACIL = 2.5f;
+    public final float VELOCIDAD_DIFICIL = 3.5f; 
+    public final float VELOCIDAD; 
     public final float GRAVITY = -3.5f;
     boolean actuar ; 
     public float xChange; 
     public float yChange; 
 
-     public Cerdo2(){
-         this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/cerdo.mp3"));
-         this.actuar = false; 
+     public Cerdo2(int velocidad){
+         
+        if(velocidad == 1){
+            this.VELOCIDAD = VELOCIDAD_DIFICIL; 
+        }
+        else{
+            this.VELOCIDAD = VELOCIDAD_FACIL; 
+        }
+         
+        this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/cerdo.mp3"));
+        this.actuar = false; 
         this.miraDerecha = false; 
         this.width= 120;
         this.height = 130;
@@ -51,15 +61,13 @@ public class Cerdo2 extends Image {
         this.crearAtaque();
         this.crearCaminar(); 
         this.crearMuerte();
-        this.crearParado();
-        
-           
+        this.crearParado();    
     }
      
     public boolean isActuar() {
         return actuar;
     }
-     public float getyVelocity() {
+    public float getyVelocity() {
         return yVelocity;
     }
 
@@ -90,19 +98,19 @@ public class Cerdo2 extends Image {
         parado.setPlayMode(Animation.PlayMode.LOOP);
     }
     
-     public void crearCaminar(){
-         TextureRegion[] cam = new TextureRegion[10];
-         
-          for (int i = 0; i < 10; i++) {
-            cam[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo2/correr/correr" + i + ".png")));
-        }
-          
-        caminar  = new Animation(0.15f, cam[0],  cam[1], cam[2], cam[3], cam[4], cam[5], cam[6], cam[7], cam[8],
-                               cam[9]);
-        caminar.setPlayMode(Animation.PlayMode.LOOP);
-  
-     }
-     public void crearAtaque(){
+    public void crearCaminar(){
+        TextureRegion[] cam = new TextureRegion[10];
+
+         for (int i = 0; i < 10; i++) {
+           cam[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo2/correr/correr" + i + ".png")));
+       }
+
+       caminar  = new Animation(0.15f, cam[0],  cam[1], cam[2], cam[3], cam[4], cam[5], cam[6], cam[7], cam[8],
+                              cam[9]);
+       caminar.setPlayMode(Animation.PlayMode.LOOP);
+
+    }
+    public void crearAtaque(){
         TextureRegion[] atk = new TextureRegion[9];
          
         for (int i = 0; i < 9; i++) {
@@ -154,15 +162,13 @@ public class Cerdo2 extends Image {
         this.xVelocity = VELOCIDAD;
     }   
      
-     public boolean getMiraDerecha() {
+    public boolean getMiraDerecha() {
         return miraDerecha;
     }
 
     public void setMiraDerecha(boolean miraDerecha) {
         this.miraDerecha = miraDerecha;
     }
-  
-    
     @Override
     public void act(float delta) {
         
@@ -178,7 +184,6 @@ public class Cerdo2 extends Image {
               xChange = xVelocity * delta;
           }
           
-           
            yChange = yVelocity * delta;
 
 
@@ -269,6 +274,7 @@ public class Cerdo2 extends Image {
     public void gritar(){
         this.hit.play(); 
     }
+    
      public boolean canMoveTo(float startX, float startY) {
         float endX = startX + this.getWidth();
         float endY = startY + this.getHeight();
@@ -289,7 +295,4 @@ public class Cerdo2 extends Image {
 
         return true;
     }
-     
-     
-   
 }

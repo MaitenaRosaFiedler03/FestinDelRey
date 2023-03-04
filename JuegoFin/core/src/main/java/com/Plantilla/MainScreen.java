@@ -82,7 +82,7 @@ public class MainScreen implements Screen {
         stage.getViewport().setCamera(camera);
         puntos =0;
         
-        this.crearEnemigos();
+        this.crearEnemigos(MyGdxGame.modoJuego);
         this.crearFinal();
         this.crearMan();
     }
@@ -109,20 +109,20 @@ public class MainScreen implements Screen {
         this.puerta.setPosition(48, 12);
         stage.addActor(this.puerta);
     }
-    public void crearEnemigos(){
+    public void crearEnemigos(int velocidad){
         
-        this.enemigo  = new Cerdo1();
+        this.enemigo  = new Cerdo1(velocidad);
         this.enemigo.layer = (TiledMapTileLayer) map.getLayers().get("ventana");
         this.enemigo.setPosition(15, 7);
         stage.addActor(this.enemigo);
 
 
-        this.enemigo2  = new Cerdo2();
+        this.enemigo2  = new Cerdo2(velocidad);
         this.enemigo2.layer = (TiledMapTileLayer) map.getLayers().get("ventana");
         this.enemigo2.setPosition(20, 11);
         stage.addActor(this.enemigo2);
 
-        this.enemigo3  = new Cerdo3();
+        this.enemigo3  = new Cerdo3(velocidad);
         this.enemigo3.layer = (TiledMapTileLayer) map.getLayers().get("ventana");
         this.enemigo3.setPosition(40, 12);
         stage.addActor(this.enemigo3);

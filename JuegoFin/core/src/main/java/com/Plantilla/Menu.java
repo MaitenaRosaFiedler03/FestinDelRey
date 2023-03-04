@@ -90,15 +90,13 @@ public class Menu implements Screen {
             if (sonido.contains(touchPoint.x, touchPoint.y)) {
                 if(estado == false){
                     this.estadoSound = "soundOn.png"; 
-                    MyGdxGame.SONIDO = true; 
-                    System.out.println("a");
+                    MyGdxGame.SONIDO = true;
                     estado= true;
-                     MyGdxGame.musica.play();
+                    MyGdxGame.musica.play();
                 }
                 else if(estado){
                     this.estadoSound = "soundOff.png"; 
-                    MyGdxGame.SONIDO = false; 
-                    System.out.println("a");
+                    MyGdxGame.SONIDO = false;
                     estado= false;
                     MyGdxGame.musica.stop();
                 }

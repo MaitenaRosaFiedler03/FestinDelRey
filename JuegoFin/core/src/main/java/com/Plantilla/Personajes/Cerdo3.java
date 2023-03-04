@@ -30,12 +30,21 @@ public class Cerdo3 extends Image {
     boolean choco; 
     boolean pegar ; 
     public boolean miraDerecha; 
-    public final float VELOCIDAD = 2f;
+     public final float VELOCIDAD_FACIL = 2.5f;
+    public final float VELOCIDAD_DIFICIL = 3.5f; 
+    public final float VELOCIDAD; 
     final float GRAVITY = -3.5f;
     Sound hit;
 
-     public Cerdo3(){
+     public Cerdo3(int velocidad ){
        
+        if(velocidad == 1){
+            this.VELOCIDAD = VELOCIDAD_DIFICIL; 
+        }
+        else{
+            this.VELOCIDAD = VELOCIDAD_FACIL; 
+        } 
+         
         this.miraDerecha = false; 
         this.width= 90;
         this.height = 145;
@@ -52,13 +61,13 @@ public class Cerdo3 extends Image {
          
            
     }
-     public void gritar(){
-         this.hit.play(); 
-     }
+    public void gritar(){
+        this.hit.play(); 
+    }
     public void crearParado(){
-         TextureRegion[] par = new TextureRegion[12];
+        TextureRegion[] par = new TextureRegion[12];
          
-          for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             par[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo3/parado/parado" + i + ".png")));
         }
           
@@ -69,7 +78,7 @@ public class Cerdo3 extends Image {
      public void crearCaminar(){
          TextureRegion[] cam = new TextureRegion[10];
          
-          for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             cam[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo3/correr/correr" + i + ".png")));
         }
           

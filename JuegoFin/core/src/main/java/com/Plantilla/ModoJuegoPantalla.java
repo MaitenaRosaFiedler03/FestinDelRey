@@ -4,22 +4,15 @@
  */
 package com.Plantilla;
 
-import com.Plantilla.PantallasAyuda.Ayuda;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -39,10 +32,12 @@ public class ModoJuegoPantalla implements Screen {
         Rectangle salir, continuar; 
         Texture  bSalir; 
         Texture bContinuar ; 
+        boolean seleccionado; 
 
         public ModoJuegoPantalla(final MyGdxGame game){
             
             this.game = game; 
+            this.seleccionado = false; 
             camera = new OrthographicCamera();
             camera.setToOrtho(false, 800, 480);
             testTable = new Table();
@@ -87,12 +82,12 @@ public class ModoJuegoPantalla implements Screen {
                 System.out.println("x : " + touchPoint.x + " y : " + touchPoint.y);
                 if (botonModoFacil.contains(touchPoint.x, touchPoint.y)) {
                         MyGdxGame.modoJuego = MyGdxGame.JUEGO_FACIL;
-                          opcion = "Haz elegido el modo Fácil"; 
-                           
+                        opcion = "Haz elegido el modo Fácil"; 
+                        this.seleccionado= true; 
                 }
                 if (botonModoDificil.contains(touchPoint.x, touchPoint.y)) {
                     MyGdxGame.modoJuego = MyGdxGame.JUEGO_DIFICIL;
-                
+                    this.seleccionado= true; 
                      opcion = "Haz elegido el modo Dificil";
                 }
                 if (salir.contains(touchPoint.x, touchPoint.y)) {
@@ -100,8 +95,13 @@ public class ModoJuegoPantalla implements Screen {
                             dispose();
                 }   
                 if (continuar.contains(touchPoint.x, touchPoint.y)) {
-                       game.setScreen(new Historio(game));
+                    if(this.seleccionado){
+                         game.setScreen(new Historio(game));
                             dispose();
+                    }
+                    else{
+                        opcion = "Seleccione una opción"; 
+                    }
                 } 
 	}
     }

@@ -30,12 +30,22 @@ public class Cerdo1 extends Image {
     boolean choco; 
     boolean pegar ; 
     public boolean miraDerecha; 
-    public final float VELOCIDAD = 2f;
+     public final float VELOCIDAD_FACIL = 2.5f;
+    public final float VELOCIDAD_DIFICIL = 3.5f; 
+    public final float VELOCIDAD; 
     Sound hit; 
     int vida; 
     boolean muerto ; 
 
-     public Cerdo1(){
+     public Cerdo1( int velocidad){
+         
+        if(velocidad == 1){
+            this.VELOCIDAD = VELOCIDAD_DIFICIL; 
+        }
+        else{
+            this.VELOCIDAD = VELOCIDAD_FACIL; 
+        } 
+         
         this.vida =3; 
         this.miraDerecha = false; 
         this.width= 120;
@@ -44,8 +54,8 @@ public class Cerdo1 extends Image {
         this.setSize(1, height / width);
         this.choco = false; 
         this.pegar = false; 
-         this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/gritoPig.mp3"));
-         this.muerto= false; 
+        this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/gritoPig.mp3"));
+        this.muerto= false; 
          
         this.crearAtaque();
         this.crearCaminar();
@@ -71,11 +81,11 @@ public class Cerdo1 extends Image {
         this.vida = vida;
     }
      
-     public void gritar(){
-         this.hit.play(); 
-     }
+    public void gritar(){
+        this.hit.play(); 
+    }
     
-     public void crearAtaque(){
+    public void crearAtaque(){
         TextureRegion[] atk = new TextureRegion[12];
          
         for (int i = 0; i < 12; i++) {
@@ -91,7 +101,7 @@ public class Cerdo1 extends Image {
          
         TextureRegion[] cam = new TextureRegion[11];
          
-          for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 11; i++) {
             cam[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo1/correr/correr" + i + ".png")));
         }
           
@@ -103,7 +113,7 @@ public class Cerdo1 extends Image {
     public void crearMuerte(){
         TextureRegion[] muer = new TextureRegion[7];
          
-          for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             muer[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo1/muerto/muerto" + i + ".png")));
         }
           
@@ -113,7 +123,7 @@ public class Cerdo1 extends Image {
     }
     
     public void crearParado(){
-          TextureRegion[] par = new TextureRegion[7];
+        TextureRegion[] par = new TextureRegion[7];
          
           for (int i = 0; i < 7; i++) {
             par[i] = new TextureRegion(new Texture(Gdx.files.internal("cerdo1/parado/parado" + i + ".png")));
@@ -154,32 +164,32 @@ public class Cerdo1 extends Image {
         float yChange = yVelocity * delta;
         
       
-            if (canMoveTo(x + xChange, y, false) == false) {
-               if(choco){
-                   choco = false; 
-               }
-               else{
-                   choco = true;
-               }
-            } 
-            if (canMoveTo(x - xChange, y, false) == false) {
-               if(choco){
-                   choco = true; 
-               }
-               else{
-                   choco = false;
-               }
-            } 
-        
-            if (canMoveTo(x, y + yChange, yVelocity > 0) == false) {
+        if (canMoveTo(x + xChange, y, false) == false) {
+           if(choco){
+               choco = false; 
+           }
+           else{
+               choco = true;
+           }
+        } 
+        if (canMoveTo(x - xChange, y, false) == false) {
+           if(choco){
+               choco = true; 
+           }
+           else{
+               choco = false;
+           }
+        } 
 
-                yVelocity = yChange = 0;
-            }
-            this.setPosition(x + xChange, y + yChange);
+        if (canMoveTo(x, y + yChange, yVelocity > 0) == false) {
 
-            if (Math.abs(xVelocity) < 0.5f) {
-                xVelocity = 0;
-            }
+            yVelocity = yChange = 0;
+        }
+        this.setPosition(x + xChange, y + yChange);
+
+        if (Math.abs(xVelocity) < 0.5f) {
+            xVelocity = 0;
+        }
         
     }
     
