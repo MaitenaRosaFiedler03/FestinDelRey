@@ -56,7 +56,7 @@ public class Puntuaciones {
         this.factory = DocumentBuilderFactory.newInstance();
         this.builder = factory.newDocumentBuilder();
 			
-        this.document = this.builder.parse(new File("info/puntos.xml")); 
+        this.document = this.builder.parse(new File("Info/puntos.xml")); 
 
  
       //Excepciones en la creacion del documento u errores de lectura  
@@ -80,7 +80,7 @@ public class Puntuaciones {
             this.dom = builder.getDOMImplementation();
             this.doc = (Document) this.dom.createDocument(null,  "Sistema", null);
             this.source = new DOMSource(this.doc);
-            this.resultado = new StreamResult(new File("C:\\Users\\maite\\OneDrive\\Documentos\\Juegos\\GatitovsEspadas\\core\\src\\main\\java\\com\\Plantilla\\puntos.xml"));
+            this.resultado = new StreamResult(new File("Info/puntos.xml"));
                            
          } catch (ParserConfigurationException pce){
                 pce.printStackTrace();
@@ -88,7 +88,7 @@ public class Puntuaciones {
         
        
         
-        System.out.println("ayuda ");
+       
          
     }
     
