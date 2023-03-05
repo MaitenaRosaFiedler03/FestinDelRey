@@ -58,12 +58,15 @@ public class Nivel2 implements Screen {
                         "Rey Man: No lo sabia" , "\nRey Cerdo: ya es tarde *se muere*"
                 };
     int mensajeActual; 
-    boolean Final ; 
+    boolean Final;
+    int[] comidas; 
     
     public Nivel2(MyGdxGame g){
         this.juego = g; 
         this.man = MyGdxGame.man;
         this.mensajeActual =0;
+        vida =3; 
+        this.comidas = new int[3]; 
         vida =3; 
         this.inicioCerdo2 = true; 
         this.juego = g; 
@@ -81,16 +84,29 @@ public class Nivel2 implements Screen {
         for (int i = 0; i < 3; i++) {
             vidas.add(new Texture(Gdx.files.internal("corazon.png")));
         }
+        
          
     }
    
     public void generarComida(){
-        
+
         this.comida[0] = new Comida(); 
         this.comida[0].setVista();
         this.comida[0].layer = (TiledMapTileLayer) map.getLayers().get("ventana");
-        this.comida[0].setPosition(10, 10);
+        this.comida[0].setPosition(47, 12);
         stage.addActor(this.comida[0]);
+        
+        this.comida[1] = new Comida(); 
+        this.comida[1].setVista();
+        this.comida[1].layer = (TiledMapTileLayer) map.getLayers().get("ventana");
+        this.comida[1].setPosition(30, 4);
+        stage.addActor(this.comida[1]);
+        
+        this.comida[2] = new Comida(); 
+        this.comida[2].setVista();
+        this.comida[2].layer = (TiledMapTileLayer) map.getLayers().get("ventana");
+        this.comida[2].setPosition(27, 11);
+        stage.addActor(this.comida[2]);
         
     }
     
@@ -117,7 +133,7 @@ public class Nivel2 implements Screen {
         this.generarRey();
         this.generarCanon();
         this.crearMan();
-       
+        this.generarComida();
        
     }
     void comprobarCollision(){
@@ -250,9 +266,9 @@ public class Nivel2 implements Screen {
                mensajeActual++; 
            }
         }
-        else{
-             this.comprobarMuerto();
         
+        this.comprobarMuerto();
+        this.collisionComida();
         this.compruebaSeguimiento();
         this.perseguir(delta);
         anterior = 0; 
@@ -260,7 +276,7 @@ public class Nivel2 implements Screen {
         this.comprobarEnemigosPegarMan(); 
         this.comprabarGolpes();
         this.menu(); 
-        }
+        
        
         this.posicionarCamara();
          
@@ -271,6 +287,59 @@ public class Nivel2 implements Screen {
         this.man.setPegar(false);
        
     }
+    
+    
+     public void collisionComida(){
+        if(this.man.dimensiones().overlaps(this.comida[0].dimensiones()) && this.comidas[0] == 0){
+            if(this.comida[0].getTipo() == MyGdxGame.ACEITUNA){
+                this.vida++; 
+                this.comida[0].remove();
+                this.comidas[0] =1; 
+                if(this.vidas.size() < 3){
+                    this.vidas.add(new Texture(Gdx.files.internal("corazon.png"))); 
+                }
+                this.puntos +=100;
+            }
+            else{
+                this.puntos += 50;
+                this.comida[0].remove();
+                this.comidas[0] =1; 
+            }
+        }
+        else if(this.man.dimensiones().overlaps(this.comida[1].dimensiones()) && this.comidas[1] == 0){
+            if(this.comida[1].getTipo() == MyGdxGame.ACEITUNA){
+                this.vida++; 
+                this.comida[1].remove();
+                this.comidas[1] =1; 
+                if(this.vidas.size() < 3){
+                    this.vidas.add(new Texture(Gdx.files.internal("corazon.png"))); 
+                }
+                this.puntos +=100;
+            }
+            else{
+                this.comida[1].remove();
+                this.comidas[1] =1;
+                this.puntos += 50;
+            }
+        }
+        else if(this.man.dimensiones().overlaps(this.comida[2].dimensiones()) && this.comidas[2] == 0){
+            if(this.comida[2].getTipo() == MyGdxGame.ACEITUNA){
+                this.vida++; 
+                this.comida[2].remove();
+                this.comidas[2] =1; 
+                if(this.vidas.size() < 3){
+                    this.vidas.add(new Texture(Gdx.files.internal("corazon.png"))); 
+                }
+                this.puntos +=100;
+            }
+            else{
+                this.comida[2].remove();
+                this.comidas[2] =1; 
+                this.puntos += 50;
+            } 
+        }
+    }
+    
      void comprobarCollisionEnemigo3(){
         
         if(enemigo3.dimensiones().overlaps(man.dimensiones())){

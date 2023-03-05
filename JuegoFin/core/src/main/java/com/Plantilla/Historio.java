@@ -67,7 +67,7 @@ public class Historio implements Screen {
             mensajeActual++;
             if(mensajeActual == mensajes.length) {
                 mensajeActual--;
-                game.setScreen(new MainScreen(game));
+                game.setScreen(new Nivel2(game));
             }
 	}
 
