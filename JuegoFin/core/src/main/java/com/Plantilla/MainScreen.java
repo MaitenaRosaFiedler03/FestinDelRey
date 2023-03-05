@@ -46,11 +46,17 @@ public class MainScreen implements Screen {
     Comida[] comida; 
     boolean inicioCerdo2;
     int pegado ; 
+    int[] comidas; 
     
   
     
     public MainScreen(MyGdxGame pantalla){
         vida =3; 
+        this.comidas = new int[3]; 
+        
+        for (int i = 0; i < 3; i++) {
+            this.comidas[i] =0; 
+        }
         this.inicioCerdo2 = true; 
         this.juego = pantalla; 
         menu = new Rectangle(0, 19, 24, 64);
@@ -67,7 +73,7 @@ public class MainScreen implements Screen {
         for (int i = 0; i < 3; i++) {
             vidas.add(new Texture(Gdx.files.internal("corazon.png")));
         }
-       
+        
     }
     @Override
     public void show() {
@@ -90,15 +96,78 @@ public class MainScreen implements Screen {
         this.crearEnemigos(MyGdxGame.modoJuego);
         this.crearFinal();
         this.crearMan();
+        this.generarComida();
     }
     public void generarComida(){
         
         this.comida[0] = new Comida(); 
         this.comida[0].setVista();
         this.comida[0].layer = (TiledMapTileLayer) map.getLayers().get("ventana");
-        this.comida[0].setPosition(10, 10);
+        this.comida[0].setPosition(30, 12);
         stage.addActor(this.comida[0]);
         
+        this.comida[1] = new Comida(); 
+        this.comida[1].setVista();
+        this.comida[1].layer = (TiledMapTileLayer) map.getLayers().get("ventana");
+        this.comida[1].setPosition(10, 1);
+        stage.addActor(this.comida[1]);
+        
+        this.comida[2] = new Comida(); 
+        this.comida[2].setVista();
+        this.comida[2].layer = (TiledMapTileLayer) map.getLayers().get("ventana");
+        this.comida[2].setPosition(19, 14);
+        stage.addActor(this.comida[2]);
+        
+    }
+    public void collisionComida(){
+        if(this.man.dimensiones().overlaps(this.comida[0].dimensiones()) && this.comidas[0] == 0){
+            if(this.comida[0].getTipo() == MyGdxGame.ACEITUNA){
+                this.vida++; 
+                this.comida[0].remove();
+                this.comidas[0] =1; 
+                if(this.vidas.size() < 3){
+                    this.vidas.add(new Texture(Gdx.files.internal("corazon.png"))); 
+                }
+                this.puntos +=100;
+            }
+            else{
+                this.puntos += 50;
+                this.comida[0].remove();
+                this.comidas[0] =1; 
+            }
+        }
+        else if(this.man.dimensiones().overlaps(this.comida[1].dimensiones()) && this.comidas[1] == 0){
+            if(this.comida[1].getTipo() == MyGdxGame.ACEITUNA){
+                this.vida++; 
+                this.comida[1].remove();
+                this.comidas[1] =1; 
+                if(this.vidas.size() < 3){
+                    this.vidas.add(new Texture(Gdx.files.internal("corazon.png"))); 
+                }
+                this.puntos +=100;
+            }
+            else{
+                this.comida[1].remove();
+                this.comidas[1] =1;
+                this.puntos += 50;
+            }
+        }
+        else if(this.man.dimensiones().overlaps(this.comida[2].dimensiones()) && this.comidas[2] == 0){
+            if(this.comida[2].getTipo() == MyGdxGame.ACEITUNA){
+                this.vida++; 
+                this.comida[2].remove();
+                this.comidas[2] =1; 
+                if(this.vidas.size() < 3){
+                    this.vidas.add(new Texture(Gdx.files.internal("corazon.png"))); 
+                }
+                this.puntos +=100;
+            }
+            else{
+                this.comida[2].remove();
+                this.comidas[2] =1; 
+                this.puntos += 50;
+            } 
+        }
     }
     public void crearMan(){
         
@@ -148,7 +217,6 @@ public class MainScreen implements Screen {
                 }
                
             }else{
-                
                 this.enemigo.gritar();
                 this.enemigo.setxVelocity(0f);
                 this.enemigo.setPegar(true);
@@ -236,7 +304,7 @@ public class MainScreen implements Screen {
         this.perseguir(delta);
         anterior = 0; 
         this.pegarMan();
-        this.generarComida();
+        this.collisionComida();
         this.comprabarGolpes();
         this.finalNivel();
         this.menu(); 
@@ -251,7 +319,7 @@ public class MainScreen implements Screen {
     }
     public void comprobarEnemigosPegarMan(){
         this.comprobarCollisionEnemigo();
-       // this.comprobarCollisionEnemigo2();
+        this.comprobarCollisionEnemigo2();
         this.comprobarCollisionEnemigo3();
     }
     
@@ -305,8 +373,8 @@ public class MainScreen implements Screen {
             camera.position.x = 22; 
             camera.update();
         }
-        if(this.man.getX() > 30){
-            camera.position.x = 30; 
+        if(this.man.getX() > 31){
+            camera.position.x = 31; 
             camera.update();
         }
             

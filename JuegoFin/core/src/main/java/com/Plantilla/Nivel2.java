@@ -150,18 +150,18 @@ public class Nivel2 implements Screen {
         
         this.enemigo  = new Cerdo1(velocidad);
         this.enemigo.layer = (TiledMapTileLayer) map.getLayers().get("principal");
-        this.enemigo.setPosition(15, 7);
+        this.enemigo.setPosition(30, 5);
         stage.addActor(this.enemigo);
 
 
         this.enemigo2  = new Cerdo2(velocidad);
         this.enemigo2.layer = (TiledMapTileLayer) map.getLayers().get("principal");
-        this.enemigo2.setPosition(20, 11);
+        this.enemigo2.setPosition(15, 4);
         stage.addActor(this.enemigo2);
 
         this.enemigo3  = new Cerdo3(velocidad);
         this.enemigo3.layer = (TiledMapTileLayer) map.getLayers().get("principal");
-        this.enemigo3.setPosition(40, 12);
+        this.enemigo3.setPosition(45, 5);
         stage.addActor(this.enemigo3);
     }
     public void comprobarCollisionEnemigo(){
@@ -361,7 +361,7 @@ public class Nivel2 implements Screen {
         
     }
     
-    public void perseguir(float delta){
+    public void perseguir(float delta){ 
         
         if(this.man.getX() >= 16){
             

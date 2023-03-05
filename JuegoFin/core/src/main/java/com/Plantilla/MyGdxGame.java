@@ -30,17 +30,20 @@ public class MyGdxGame extends Game {
     public static int modoJuego;
     public Puntuaciones puntuaciones; 
     public ArrayList<Integer> puntajes; 
-    public static boolean SONIDO = false; 
+    public static boolean SONIDO = true; 
     public static Music musica; 
     public static int nivel; 
     public static Man man; 
+    public final static int ACEITUNA =0;
+    public final static int TARTA =1 ; 
+    public final static int SALCHICA =2; 
     
     
 	public void create() {
             batch = new SpriteBatch();
             font = new BitmapFont(Gdx.files.internal("font.fnt"), Gdx.files.internal("font.png"), false); 
             this.setScreen(new Inicio(this));
-            puntuaciones = new Puntuaciones(); 
+            //puntuaciones = new Puntuaciones(); 
             this.puntajes = new ArrayList<>(); 
             this.musica = Gdx.audio.newMusic(Gdx.files.internal("Sonidos/musica.mp3"));
             this.nivel = 1; 

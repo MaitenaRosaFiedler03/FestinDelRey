@@ -34,7 +34,7 @@ public class Cerdo2 extends Image {
     public final float VELOCIDAD_FACIL = 2.5f;
     public final float VELOCIDAD_DIFICIL = 3.5f; 
     public final float VELOCIDAD; 
-    public final float GRAVITY = -3.5f;
+    public final float GRAVITY = -3.7f;
     boolean actuar ; 
     public float xChange; 
     public float yChange; 

@@ -4,13 +4,12 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.Plantilla.MyGdxGame;
 
-/** Launches the desktop (LWJGL3) applica tion. */
 public class Lwjgl3Launcher {
 	public static void main(String[] args) {
 		createApplication();
 	}
 
-	private static Lwjgl3Application createApplication() {
+	private static Lwjgl3Application createApplication(){
 		return new Lwjgl3Application(new MyGdxGame(), getDefaultConfiguration());
 	}
 
