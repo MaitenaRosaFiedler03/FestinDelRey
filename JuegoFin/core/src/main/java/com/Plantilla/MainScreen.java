@@ -481,7 +481,7 @@ public class MainScreen implements Screen {
         this.enemigo3.tiempoGolpe += delta;
         this.man.tiempo += delta; 
 
-        if(vida == 0){
+        if(vida == 0 || vidas.size() ==0){
             this.juego.setScreen(new Perdiste(this.juego));
         }
         

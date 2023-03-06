@@ -26,7 +26,7 @@ public class Final implements Screen{
    
     MyGdxGame game;
 
-    OrthographicCamera guiCam;
+    OrthographicCamera camera;
     Rectangle nextBounds;
     Vector3 touchPoint;
    
@@ -41,40 +41,27 @@ public class Final implements Screen{
     int mensajeActual; 
 
     public Final (MyGdxGame game) {
-        System.out.println("ayuda ");
-            this.game = game;
-            guiCam = new OrthographicCamera();
-            guiCam.setToOrtho(false, 800, 480);
-            testTable = new Table();
-            testTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("fondo.png"))));
-            testTable.setFillParent(true);
-            testTable.setDebug(true);
-            stage = new Stage();
-            
-            stage.addActor(testTable);
-            nextBounds = new Rectangle(500 , 0, 64, 64);
-            touchPoint = new Vector3();
-            
+        
+       
+        this.game = game; 
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+        testTable = new Table();
+        testTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("fondo.png"))));
+        testTable.setFillParent(true);
+        testTable.setDebug(true);
+        stage = new Stage();
+        stage.addActor(testTable);
+        touchPoint = new Vector3();
+        mensajeActual=0;     
            
-              this.mensajeActual =0;
+            
     }
 
     public void update () {
         
         
-            if(Gdx.input.justTouched()) {
-
-                if(mensajeActual == dialogos.length) {
-                    mensajeActual--;
-                    game.setScreen(new Inicio(game));
-                }
-                
-               this.game.batch.begin();
-               this.game.font.draw(game.batch, dialogos[mensajeActual], 500, 400, 320, Align.center, false);
-
-               this.game.batch.end();
-               mensajeActual++; 
-           }
+            
     }
     public void draw () {
             
@@ -84,8 +71,30 @@ public class Final implements Screen{
 
     @Override
     public void render (float delta) {
-            draw();
-            update();
+        
+        
+
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
+        stage.act();
+        stage.draw();
+            
+        if(Gdx.input.justTouched()) {
+                 mensajeActual++; 
+                if(mensajeActual == dialogos.length) {
+                    mensajeActual--;
+                    game.setScreen(new Inicio(game));
+                }
+                
+               
+           }
+        
+        this.game.batch.begin();
+        this.game.font.draw(game.batch, dialogos[mensajeActual], 120, 400, 320, Align.center, false);
+
+        this.game.batch.end();
+       
+            
     }
 
     @Override
