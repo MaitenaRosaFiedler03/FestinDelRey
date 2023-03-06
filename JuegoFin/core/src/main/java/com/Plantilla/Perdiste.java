@@ -50,7 +50,7 @@ public class Perdiste implements Screen {
             stage.draw();
 
             game.batch.begin();
-             game.font.draw(game.batch, String.valueOf(this.game.puntajes.get(this.game.puntajes.size() - 1)) , 320,220 );
+             game.font.draw(game.batch,String.valueOf(MyGdxGame.puntos) , 320,220 );
 
             game.font.draw(game.batch, "Puntuaciones  " , 170,190 );
             if(this.game.puntajes.size() >= 1){
@@ -70,7 +70,7 @@ public class Perdiste implements Screen {
             }
             game.batch.end();
 
-
+            MyGdxGame.restaurar();
             if (Gdx.input.justTouched()) {
                     game.setScreen(new Inicio(game));
                     dispose();

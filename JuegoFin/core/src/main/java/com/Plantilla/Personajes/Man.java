@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class Man extends Image {
         Animation stand;
         Animation walk;
+        public float tiempo; 
         Animation jump;
         Animation golpe, muerte;
         float time = 0;
@@ -35,10 +36,10 @@ public class Man extends Image {
         final float DAMPING = 0.87f;
         public  final float width;
         public final float height; 
-        Sound hit ; 
+        Sound hit; 
         boolean muerto;
         int vida; 
-        Sound salto; 
+        public Sound salto; 
         float tiempoPegar; 
         float tiempoPegando; 
         boolean pegar; 

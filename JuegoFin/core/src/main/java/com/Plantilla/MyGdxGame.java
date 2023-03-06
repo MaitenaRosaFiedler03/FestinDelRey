@@ -60,4 +60,13 @@ public class MyGdxGame extends Game {
             }
             
 	}
+        public static void restaurar(){
+            
+            vidas = new ArrayList<>();
+            
+            for (int i = 0; i < 3; i++) {
+                vidas.add(new Texture(Gdx.files.internal("corazon.png")));
+            }
+            puntos =0; 
+        }
 }

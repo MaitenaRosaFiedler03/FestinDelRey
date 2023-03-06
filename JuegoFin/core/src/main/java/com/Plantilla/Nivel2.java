@@ -55,6 +55,7 @@ public class Nivel2 implements Screen {
     ReyCerdo rey; 
     Canon canon; 
     float tiempoDisparoCanon; 
+    int cantBombas; 
     
     boolean Final;
     int[] comidas; 
@@ -64,7 +65,7 @@ public class Nivel2 implements Screen {
         this.bombas = new ArrayList<>(); 
         this.juego = g; 
         this.man = MyGdxGame.man;
-        
+        this.cantBombas =0;
         vida =3; 
         this.comidas = new int[3]; 
         vida =3; 
@@ -185,7 +186,7 @@ public class Nivel2 implements Screen {
                     this.enemigo.gritar();
                     this.vida--; 
                     this.enemigo.tiempoGolpe =0; 
-                    if(vidas.size() >1)
+                    if(vidas.size() >=1)
                         this.vidas.remove(vidas.size() -1 ); 
                 }
                
@@ -211,7 +212,7 @@ public class Nivel2 implements Screen {
                     this.enemigo2.gritar();
                     this.vida--; 
                     this.enemigo2.tiempoGolpe =0; 
-                    if(vidas.size() >1)
+                    if(vidas.size() >=1)
                      this.vidas.remove(vidas.size() -1 ); 
                 }
                
@@ -377,7 +378,7 @@ public class Nivel2 implements Screen {
                     this.enemigo3.gritar();
                     this.vida--; 
                     this.enemigo3.tiempoGolpe =0; 
-                    if(vidas.size() > 1)
+                    if(vidas.size() >= 1)
                         this.vidas.remove(vidas.size() -1 ); 
                 }
                
@@ -488,11 +489,11 @@ public class Nivel2 implements Screen {
        
         bombas.add(bomba);
         
-        stage.addActor(bombas.get(bombas.size() -1 ));
+        stage.addActor(bombas.get(this.cantBombas));
        
+        this.cantBombas++; 
         
-        
-        return bombas.get(bombas.size() -1 );
+        return bombas.get(this.cantBombas -1 );
         
     }
     public void perseguir(float delta){ 
