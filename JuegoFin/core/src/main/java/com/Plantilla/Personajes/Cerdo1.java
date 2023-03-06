@@ -35,7 +35,8 @@ public class Cerdo1 extends Image {
     public final float VELOCIDAD; 
     Sound hit; 
     int vida; 
-    boolean muerto ; 
+    boolean muerto;
+    public float tiempoGolpe; 
 
      public Cerdo1( int velocidad){
          
@@ -137,7 +138,7 @@ public class Cerdo1 extends Image {
         return miraDerecha;
     }
 
-    public void setMiraDerecha(boolean miraDerecha) {
+    public void setMiraDerecha(boolean miraDerecha){
         this.miraDerecha = miraDerecha;
     }
     final float GRAVITY = -3.5f;
@@ -145,8 +146,10 @@ public class Cerdo1 extends Image {
     
     @Override
     public void act(float delta) {
+        
         time += delta;
-
+        tiempoGolpe += delta; 
+        
         if(choco){
             this.xVelocity = VELOCIDAD; 
             this.miraDerecha = true;
@@ -191,6 +194,10 @@ public class Cerdo1 extends Image {
             xVelocity = 0;
         }
         
+        if (this.muerto == true) {
+            setPosition(getX() + xVelocity * delta, getY() + yVelocity * delta);
+        }
+        
     }
     
     public float getxVelocity(){
@@ -200,12 +207,20 @@ public class Cerdo1 extends Image {
     public void setxVelocity(float xVelocity) {
         this.xVelocity = xVelocity;
     }
+    
+    public float getyVelocity(){
+        return yVelocity;
+    }
+
+    public void setyVelocity(float yVelocity) {
+        this.yVelocity = yVelocity;
+    }
 
     public boolean getPegar() {
         return pegar;
     }
 
-    public void setPegar(boolean pegar) {
+    public void setPegar(boolean pegar){
         this.pegar = pegar;
     }
     public Rectangle dimensiones(){

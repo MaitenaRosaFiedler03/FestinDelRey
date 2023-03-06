@@ -29,12 +29,14 @@ public class Cerdo3 extends Image {
     float time = 0;
     boolean choco; 
     boolean pegar ; 
+    boolean muerto;
     public boolean miraDerecha; 
      public final float VELOCIDAD_FACIL = 2.5f;
     public final float VELOCIDAD_DIFICIL = 3.5f; 
     public final float VELOCIDAD; 
     final float GRAVITY = -3.5f;
     Sound hit;
+    public float tiempoGolpe; 
 
      public Cerdo3(int velocidad ){
        
@@ -44,11 +46,12 @@ public class Cerdo3 extends Image {
         else{
             this.VELOCIDAD = VELOCIDAD_FACIL; 
         } 
-         
+        this.muerto = false;
         this.miraDerecha = false; 
         this.width= 90;
         this.height = 145;
         this.xVelocity = 0f; 
+        this.yVelocity = 0f;
         this.setSize(1, height / width);
         this.choco = false; 
         this.pegar = false; 
@@ -57,10 +60,27 @@ public class Cerdo3 extends Image {
         this.crearCaminar(); 
         this.crearMuerte();
         this.crearParado();
-        this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/cerdo.mp3"));
+        this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/gritoPig.mp3"));
          
            
     }
+
+    public float getyVelocity() {
+        return yVelocity;
+    }
+
+    public void setyVelocity(float yVelocity) {
+        this.yVelocity = yVelocity;
+    }
+    
+    public boolean getMuerto() {
+        return muerto;
+    }
+
+    public void setMuerto(boolean muerto) {
+        this.muerto = muerto;
+    }
+    
     public void gritar(){
         this.hit.play(); 
     }
@@ -136,7 +156,6 @@ public class Cerdo3 extends Image {
             batch.draw(frame, this.getX() + this.getWidth(), this.getY(), -1 * this.getWidth(), this.getHeight());
            
         }
-        this.xVelocity = VELOCIDAD;
     }   
      
      public boolean getMiraDerecha() {
@@ -151,36 +170,7 @@ public class Cerdo3 extends Image {
     @Override
     public void act(float delta) {
         time += delta;
-         this.xVelocity = 0;
-         
-        
-          yVelocity = yVelocity + GRAVITY;
-        
-        float x = this.getX();
-        float y = this.getY();
-        float xChange = xVelocity * delta;
-        float yChange = yVelocity * delta;
-        
-      
-            if (x - xChange < 40){
-                this.xVelocity = VELOCIDAD; 
-                this.miraDerecha = true;
-            } 
-            if (x- xChange > 50) {
-               this.xVelocity = - VELOCIDAD; 
-                this.miraDerecha = false; 
-
-            } 
-        
-            if (canMoveTo(x, y + yChange, yVelocity > 0) == false) {
-
-                yVelocity = yChange = 0;
-            }
-            this.setPosition(x + xChange, y + yChange);
-
-            if (Math.abs(xVelocity) < 0.5f) {
-                xVelocity = 0;
-            }
+        setPosition(getX() + xVelocity * delta, getY() + yVelocity * delta);
         
     }
     

@@ -19,41 +19,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  */
 public class Bomba extends Image{
     
-    Animation disparando ;
+    TextureRegion disparando ;
     public TiledMapTileLayer layer; 
     final float width;
     final float height; 
-    float xVelocity = 0;
-    float yVelocity = 0;
+    public float xVelocity = 0;
+    public float yVelocity = 0;
     float time = 0;
     
     public Bomba(){
-        this.width = 30; 
-        this.height = 30; 
+        this.width = 60; 
+        this.height = 60; 
         this.setSize(1, height / width);
-        this.crearAnimacion();
+       
+        this.disparando = new TextureRegion(new Texture(Gdx.files.internal("reyCerdo/canon/bomba.png"))); 
+        
     }
     
-    public void crearAnimacion(){
-         TextureRegion[] par = new TextureRegion[8];
-         
-          for (int i = 0; i < 4; i++) {
-            par[i] = new TextureRegion(new Texture(Gdx.files.internal("reyCerdo/canon/disparo" + i + ".png")));
-        }
-          
-        disparando  = new Animation(0.15f, par[0],  par[1], par[2], par[3]);
-        disparando.setPlayMode(Animation.PlayMode.LOOP);
-  
-    }
+   
      @Override
      public void draw(Batch batch, float parentAlpha) {
         TextureRegion frame;
-        frame = (TextureRegion) disparando.getKeyFrame(time);
+        frame = disparando;
         batch.draw(frame, this.getX(), this.getY(), this.getWidth(), this.getHeight());
      }
       @Override
     public void act(float delta) {
         time += delta;
+        setPosition(getX() + xVelocity * delta, getY() + yVelocity * delta);
+
     
     }
     public Rectangle dimensiones(){

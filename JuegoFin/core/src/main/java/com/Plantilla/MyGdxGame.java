@@ -9,6 +9,7 @@ import com.Plantilla.Personajes.Man;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
@@ -30,16 +31,19 @@ public class MyGdxGame extends Game {
     public static int modoJuego;
     public Puntuaciones puntuaciones; 
     public ArrayList<Integer> puntajes; 
-    public static boolean SONIDO = true; 
+    public static boolean SONIDO = false; 
     public static Music musica; 
     public static int nivel; 
     public static Man man; 
     public final static int ACEITUNA =0;
     public final static int TARTA =1 ; 
     public final static int SALCHICA =2; 
+    public static ArrayList<Texture> vidas; 
+    public static int puntos; 
     
     
 	public void create() {
+            this.puntos =0; 
             batch = new SpriteBatch();
             font = new BitmapFont(Gdx.files.internal("font.fnt"), Gdx.files.internal("font.png"), false); 
             this.setScreen(new Inicio(this));
@@ -48,6 +52,12 @@ public class MyGdxGame extends Game {
             this.musica = Gdx.audio.newMusic(Gdx.files.internal("Sonidos/musica.mp3"));
             this.nivel = 1; 
             this.man = new Man(); 
+            
+            this.vidas = new ArrayList<>();
+            
+            for (int i = 0; i < 3; i++) {
+                vidas.add(new Texture(Gdx.files.internal("corazon.png")));
+            }
             
 	}
 }

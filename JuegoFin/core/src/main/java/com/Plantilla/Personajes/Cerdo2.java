@@ -29,6 +29,7 @@ public class Cerdo2 extends Image {
     float time = 0;
     boolean choco; 
     boolean pegar ; 
+    boolean muerto;
     public boolean miraDerecha; 
     Sound hit; 
     public final float VELOCIDAD_FACIL = 2.5f;
@@ -38,6 +39,7 @@ public class Cerdo2 extends Image {
     boolean actuar ; 
     public float xChange; 
     public float yChange; 
+    public float tiempoGolpe; 
 
      public Cerdo2(int velocidad){
          
@@ -48,9 +50,10 @@ public class Cerdo2 extends Image {
             this.VELOCIDAD = VELOCIDAD_FACIL; 
         }
          
-        this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/cerdo.mp3"));
+        this.hit = Gdx.audio.newSound(Gdx.files.internal("Sonidos/gritoPig.mp3"));
         this.actuar = false; 
         this.miraDerecha = false; 
+        this.muerto = false;
         this.width= 120;
         this.height = 130;
         this.xVelocity = 0f; 
@@ -175,40 +178,56 @@ public class Cerdo2 extends Image {
     }
     public void moverse(float delta){
         time += delta;
+        if (muerto == false) {
+            
+        
+            yVelocity = yVelocity + GRAVITY;
 
-        yVelocity = yVelocity + GRAVITY;
+            float x = this.getX();
+            float y = this.getY();
+            if(choco == false){
+                xChange = xVelocity * delta;
+            }
 
-        float x = this.getX();
-        float y = this.getY();
-        if(choco == false){
-            xChange = xVelocity * delta;
+             yChange = yVelocity * delta;
+
+
+            if (canMoveTo(x + xChange, y) == false) {
+              this.xVelocity = 0; 
+              this.miraDerecha = false;
+              this.choco = true; 
+            } 
+            if (canMoveTo(x - xChange, y) == false) {
+              this.xVelocity = 0 ; 
+              this.miraDerecha = true;
+              this.choco = true; 
+            } 
+
+
+            if (canMoveTo(x, y + yChange) == false) {
+
+                yVelocity = yChange = 0;
+            }
+            this.setPosition(x + xChange, y + yChange);
+
+            if (Math.abs(xVelocity) < 0.5f) {
+                xVelocity = 0;
+            }
         }
-
-         yChange = yVelocity * delta;
-
-
-        if (canMoveTo(x + xChange, y) == false) {
-          this.xVelocity = 0; 
-          this.miraDerecha = false;
-          this.choco = true; 
-        } 
-        if (canMoveTo(x - xChange, y) == false) {
-          this.xVelocity = 0 ; 
-          this.miraDerecha = true;
-          this.choco = true; 
-        } 
-
-
-        if (canMoveTo(x, y + yChange) == false) {
-
-            yVelocity = yChange = 0;
+        
+        else{
+            setPosition(getX() + xVelocity * delta, getY() + yVelocity * delta);
         }
-        this.setPosition(x + xChange, y + yChange);
+         
 
-        if (Math.abs(xVelocity) < 0.5f) {
-            xVelocity = 0;
-        }
-         yVelocity = yVelocity + GRAVITY;
+    }
+
+    public boolean getMuerto() {
+        return muerto;
+    }
+
+    public void setMuerto(boolean muerto) {
+        this.muerto = muerto;
     }
     
     public void darVueltas(float delta){
