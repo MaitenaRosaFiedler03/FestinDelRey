@@ -26,12 +26,13 @@ public class Bomba extends Image{
     public float xVelocity = 0;
     public float yVelocity = 0;
     float time = 0;
+    public boolean destriuda ; 
     
     public Bomba(){
         this.width = 60; 
         this.height = 60; 
         this.setSize(1, height / width);
-       
+        destriuda = false; 
         this.disparando = new TextureRegion(new Texture(Gdx.files.internal("reyCerdo/canon/bomba.png"))); 
         
     }
@@ -47,7 +48,7 @@ public class Bomba extends Image{
     public void act(float delta) {
         time += delta;
         setPosition(getX() + xVelocity * delta, getY() + yVelocity * delta);
-
+        
     
     }
     public Rectangle dimensiones(){

@@ -277,7 +277,6 @@ public class MainScreen implements Screen {
                         this.vidas.remove(vidas.size() -1 ); 
                 }
                
-                
                 this.enemigo3.setPegar(true);
                
             }else{
@@ -298,16 +297,16 @@ public class MainScreen implements Screen {
     void comprobarGolpeEnemigo(){
         if(this.man.dimensiones().overlaps(this.enemigo.dimensiones())){
             
-            if(this.man.tiempo >= 0.4f){
-                this.enemigo.gritar();
+            if(this.man.tiempo >= 0.4f && man.getPegar() == true){
+                
                 this.enemigo.setyVelocity(-500);
-                this.enemigo.setMuerto(true);
+               
                 if (enemigo.getY()<=0) {
                     this.enemigo.remove(); 
                 }
                
                 this.man.setPegar(true);
-                this.man.tiempo =0; 
+               
                 MyGdxGame.puntos += 15;  
               
             }
@@ -317,8 +316,8 @@ public class MainScreen implements Screen {
     void comprobarGolpeEnemigo2(){
         if(this.man.dimensiones().overlaps(this.enemigo2.dimensiones())){
             
-           if(this.man.tiempo >= 0.4f){
-                this.enemigo2.gritar();
+           if(this.man.tiempo >= 0.4f && man.getPegar() == true){
+               
                 this.enemigo2.setyVelocity(-100000);
                 this.enemigo2.setMuerto(true);
                 this.man.setPegar(true);
@@ -326,7 +325,7 @@ public class MainScreen implements Screen {
                 if (enemigo2.getY()<=0) {
                     this.enemigo2.remove(); 
                 }
-                this.man.tiempo =0; 
+               
                MyGdxGame.puntos += 15;  
               
             }
@@ -336,7 +335,7 @@ public class MainScreen implements Screen {
     void comprobarGolpeEnemigo3(){
         if(this.man.dimensiones().overlaps(this.enemigo3.dimensiones())){
             
-            if(this.man.tiempo >= 0.4f){
+            if(this.man.tiempo >= 0.4f && man.getPegar() == true){
               
                 this.enemigo3.setyVelocity(-100000);
                 this.enemigo3.setMuerto(true);
@@ -376,14 +375,14 @@ public class MainScreen implements Screen {
     }
     
     public void pegarMan(){
-        if(man.tiempo >= 0.4f){
+        
             if (Gdx.input.isKeyPressed(Input.Keys.Z ) && (!(anterior == Keys.Z ))) {
                 anterior = Keys.Z ; 
             
                 this.man.setPegar(true);
-                this.man.getHit().play(); 
+               
             }
-       }
+       
     }
     
     public void pintarStatusJuego(){

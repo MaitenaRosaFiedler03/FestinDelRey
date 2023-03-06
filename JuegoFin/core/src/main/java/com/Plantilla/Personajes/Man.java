@@ -52,7 +52,6 @@ public class Man extends Image {
         
             this.pegar = pegar;
         
-        
     }
 
     public Man( ) {
@@ -84,7 +83,7 @@ public class Man extends Image {
             muer[i] = new TextureRegion(new Texture(Gdx.files.internal("Personaje/muerto" + i + ".png")));
         }
        
-        golpe  = new Animation(100f, gpl[0],  gpl[1], gpl[2]);
+        golpe  = new Animation(9000000f, gpl[0],  gpl[1], gpl[2]);
         golpe.setPlayMode(Animation.PlayMode.NORMAL);
 
         stand = new Animation(0.30f, parado[0],  parado[1],parado[2], parado[3], parado[4], parado[5], parado[6], parado[7],
