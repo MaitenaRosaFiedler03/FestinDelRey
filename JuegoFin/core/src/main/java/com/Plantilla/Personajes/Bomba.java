@@ -32,7 +32,7 @@ public class Bomba extends Image{
         this.width = 60; 
         this.height = 60; 
         this.setSize(1, height / width);
-        destriuda = false; 
+        destriuda = true; 
         this.disparando = new TextureRegion(new Texture(Gdx.files.internal("reyCerdo/canon/bomba.png"))); 
         
     }

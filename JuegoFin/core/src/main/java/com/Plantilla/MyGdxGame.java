@@ -40,6 +40,7 @@ public class MyGdxGame extends Game {
     public final static int SALCHICA =2; 
     public static ArrayList<Texture> vidas; 
     public static int puntos; 
+    public static int vida; 
     
     
 	public void create() {
@@ -58,7 +59,7 @@ public class MyGdxGame extends Game {
             for (int i = 0; i < 3; i++) {
                 vidas.add(new Texture(Gdx.files.internal("corazon.png")));
             }
-            
+            vida =3;
 	}
         public static void restaurar(){
             
@@ -68,5 +69,6 @@ public class MyGdxGame extends Game {
                 vidas.add(new Texture(Gdx.files.internal("corazon.png")));
             }
             puntos =0; 
+            vida =3; 
         }
 }

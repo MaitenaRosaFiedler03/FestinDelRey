@@ -46,7 +46,7 @@ public class MainScreen implements Screen {
     boolean inicioCerdo2;
     int pegado ; 
     int[] comidas; 
-    int vida; 
+    
     
   
     
@@ -90,7 +90,7 @@ public class MainScreen implements Screen {
         stage = new Stage();
         stage.getViewport().setCamera(camera);
         
-        this.vida =3; 
+        
         this.crearEnemigos(MyGdxGame.modoJuego);
         this.crearFinal();
         this.crearMan();
@@ -122,7 +122,7 @@ public class MainScreen implements Screen {
     public void collisionComida(){
         if(this.man.dimensiones().overlaps(this.comida[0].dimensiones()) && this.comidas[0] == 0){
             if(this.comida[0].getTipo() == MyGdxGame.ACEITUNA){
-                this.vida++; 
+                 MyGdxGame.vida++;
                 this.comida[0].remove();
                 this.comidas[0] =1; 
                 if(this.vidas.size() < 3){
@@ -138,7 +138,7 @@ public class MainScreen implements Screen {
         }
         else if(this.man.dimensiones().overlaps(this.comida[1].dimensiones()) && this.comidas[1] == 0){
             if(this.comida[1].getTipo() == MyGdxGame.ACEITUNA){
-                this.vida++; 
+                 MyGdxGame.vida++;
                 this.comida[1].remove();
                 this.comidas[1] =1; 
                 if(this.vidas.size() < 3){
@@ -154,7 +154,7 @@ public class MainScreen implements Screen {
         }
         else if(this.man.dimensiones().overlaps(this.comida[2].dimensiones()) && this.comidas[2] == 0){
             if(this.comida[2].getTipo() == MyGdxGame.ACEITUNA){
-                this.vida++; 
+                 MyGdxGame.vida++;
                 this.comida[2].remove();
                 this.comidas[2] =1; 
                 if(this.vidas.size() < 3){
@@ -212,7 +212,7 @@ public class MainScreen implements Screen {
             if(MyGdxGame.modoJuego == 0){
                 if(this.enemigo.tiempoGolpe >= 1.8f){
                     this.enemigo.gritar();
-                    this.vida--; 
+                     MyGdxGame.vida--;
                     this.enemigo.tiempoGolpe =0; 
                     if(vidas.size() >= 1)
                    this.vidas.remove(vidas.size() -1 ); 
@@ -236,7 +236,7 @@ public class MainScreen implements Screen {
             if(MyGdxGame.modoJuego == 0){
                 if(this.enemigo2.tiempoGolpe >= 1.8f){
                     this.enemigo2.gritar();
-                    this.vida--; 
+                     MyGdxGame.vida--;
                     this.enemigo2.tiempoGolpe =0;
                     if(vidas.size() >= 1)
                         this.vidas.remove(vidas.size() -1 ); 
@@ -271,7 +271,7 @@ public class MainScreen implements Screen {
              if(MyGdxGame.modoJuego == 0){
                 if(this.enemigo3.tiempoGolpe >= 1.8f){
                     this.enemigo3.gritar();
-                    this.vida--; 
+                     MyGdxGame.vida--; 
                     this.enemigo3.tiempoGolpe =0; 
                     if(vidas.size() >= 1)
                         this.vidas.remove(vidas.size() -1 ); 
@@ -481,7 +481,7 @@ public class MainScreen implements Screen {
         this.enemigo3.tiempoGolpe += delta;
         this.man.tiempo += delta; 
 
-        if(vida == 0 || vidas.size() ==0){
+        if( MyGdxGame.vida == 0 || vidas.size() ==0){
             this.juego.setScreen(new Perdiste(this.juego));
         }
         

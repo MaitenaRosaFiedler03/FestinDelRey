@@ -37,7 +37,8 @@ public class Perdiste implements Screen {
             testTable.setDebug(true);
              stage = new Stage();
             stage.addActor(testTable);
-            b = this.top3(); 
+            b = this.top3();
+             MyGdxGame.restaurar();
         }
 
 	@Override
@@ -70,7 +71,7 @@ public class Perdiste implements Screen {
             }
             game.batch.end();
 
-            MyGdxGame.restaurar();
+           
             if (Gdx.input.justTouched()) {
                     game.setScreen(new Inicio(game));
                     dispose();

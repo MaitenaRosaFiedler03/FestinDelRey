@@ -43,7 +43,6 @@ public class Nivel2 implements Screen {
     Rectangle menu; 
     Vector3 touchPoint;
     Man man; 
-    int vida;
     Cerdo1 enemigo; 
     Cerdo2 enemigo2;
     Cerdo3 enemigo3; 
@@ -57,6 +56,7 @@ public class Nivel2 implements Screen {
     float tiempoDisparoCanon; 
     int cantBombas; 
     Bomba c; 
+    float time = 0;
     boolean Final;
     int[] comidas; 
     
@@ -66,9 +66,8 @@ public class Nivel2 implements Screen {
         this.juego = g; 
         this.man = MyGdxGame.man;
         this.cantBombas =0;
-        vida =3; 
-        this.comidas = new int[3]; 
-        vida =3; 
+        
+        this.comidas = new int[3];  
         this.inicioCerdo2 = true; 
         this.juego = g; 
         menu = new Rectangle(0, 19, 24, 64);
@@ -185,7 +184,7 @@ public class Nivel2 implements Screen {
             if(MyGdxGame.modoJuego == 0){
                 if(this.enemigo.tiempoGolpe >= 1.8f){
                     this.enemigo.gritar();
-                    this.vida--; 
+                     MyGdxGame.vida--; 
                     this.enemigo.tiempoGolpe =0; 
                     if(vidas.size() >= 1)
                    this.vidas.remove(vidas.size() -1 ); 
@@ -208,7 +207,7 @@ public class Nivel2 implements Screen {
             if(MyGdxGame.modoJuego == 0){
                 if(this.enemigo2.tiempoGolpe >= 1.8f){
                     this.enemigo2.gritar();
-                    this.vida--; 
+                     MyGdxGame.vida--; 
                     this.enemigo2.tiempoGolpe =0;
                     if(vidas.size() >= 1)
                         this.vidas.remove(vidas.size() -1 ); 
@@ -232,7 +231,7 @@ public class Nivel2 implements Screen {
             
            if(this.man.tiempo >= 0.4f && man.getPegar() == true){
                
-                this.enemigo2.setyVelocity(-100000);
+                this.enemigo2.setPosition(-100000, -100000);
                 this.enemigo2.setMuerto(true);
                 this.man.setPegar(true);
                 
@@ -272,22 +271,30 @@ public class Nivel2 implements Screen {
         this.enemigo3.tiempoGolpe +=delta; 
         this.tiempoDisparoCanon+=delta; 
         this.man.tiempo += delta; 
-      
-        if(vida == 0 || vidas.size() == 0){
+        time += delta;
+        
+        if( MyGdxGame.vida == 0 || vidas.size() == 0){
             this.juego.setScreen(new Perdiste(this.juego));
         }
-        this.comprobarBomba(); 
-        if(c.destriuda == true){
-            c = this.disparar(); 
-            
-            c.destriuda = false; 
-            if(c.dimensiones().overlaps(man.dimensiones())){
-            this.vida--; 
-            this.vidas.remove(vidas.size() -1); 
-                if(vida == 0){
+        this.comprobarBomba();
+        if(c.dimensiones().overlaps(man.dimensiones()) && c.destriuda == false){
+                destruirBomba();
+                System.out.println("                ccccccccccccccccccccccccccccccccc");
+                //c.destriuda = true;
+                /* MyGdxGame.vida--; 
+                this.vidas.remove(vidas.size() -1); 
+                if( MyGdxGame.vida == 0){
                     this.man.setMuerto(true);
-                }
+                }*/
+                
             }
+        if(c.destriuda == true && time >= 2f){
+            time = 0;
+            System.out.println("roto");
+            c = this.disparar(); 
+            System.out.println("vx" + c.xVelocity + "vy" + c.yVelocity);
+            c.destriuda = false;
+            
             this.tiempoDisparoCanon =0; 
         }
         this.comprobarMuerto();
@@ -311,15 +318,22 @@ public class Nivel2 implements Screen {
        
     }
     public void comprobarBomba(){
-        if(c.getX() < 40 || c.getY() > 30 || c.getY() <= 0){
-           
+        if(c.getX() <= 40 || c.getY() >= 30 || c.getY() <= 0){
+           destruirBomba();
         }
+    }
+
+    public void destruirBomba(){
+    
+        c.setPosition(-12, -200);
+        c.destriuda =true; 
+    
     }
     
      public void collisionComida(){
         if(this.man.dimensiones().overlaps(this.comida[0].dimensiones()) && this.comidas[0] == 0){
             if(this.comida[0].getTipo() == MyGdxGame.ACEITUNA){
-                this.vida++; 
+                 MyGdxGame.vida++; 
                 this.comida[0].remove();
                 this.comidas[0] =1; 
                 if(this.vidas.size() < 3){
@@ -335,7 +349,7 @@ public class Nivel2 implements Screen {
         }
         else if(this.man.dimensiones().overlaps(this.comida[1].dimensiones()) && this.comidas[1] == 0){
             if(this.comida[1].getTipo() == MyGdxGame.ACEITUNA){
-                this.vida++; 
+                 MyGdxGame.vida++; 
                 this.comida[1].remove();
                 this.comidas[1] =1; 
                 if(this.vidas.size() < 3){
@@ -351,7 +365,7 @@ public class Nivel2 implements Screen {
         }
         else if(this.man.dimensiones().overlaps(this.comida[2].dimensiones()) && this.comidas[2] == 0){
             if(this.comida[2].getTipo() == MyGdxGame.ACEITUNA){
-                this.vida++; 
+                 MyGdxGame.vida++; 
                 this.comida[2].remove();
                 this.comidas[2] =1; 
                 if(this.vidas.size() < 3){
@@ -369,11 +383,11 @@ public class Nivel2 implements Screen {
     
      void comprobarCollisionEnemigo3(){
         
-        if (enemigo3.getX() >= 50 && enemigo3.getX() > 33) {
+        if (enemigo3.getX() >= 45 && enemigo3.getX() > 34) {
             enemigo3.setxVelocity(-2);
             enemigo3.miraDerecha = false;
         }
-        else if (enemigo3.getX() <= 33 && enemigo3.getX() < 50) {
+        else if (enemigo3.getX() <= 33 && enemigo3.getX() < 45) {
             enemigo3.setxVelocity(2);
             enemigo3.miraDerecha = true; 
         }
@@ -382,7 +396,7 @@ public class Nivel2 implements Screen {
              if(MyGdxGame.modoJuego == 0){
                 if(this.enemigo3.tiempoGolpe >= 1.8f){
                     this.enemigo3.gritar();
-                    this.vida--; 
+                     MyGdxGame.vida--; 
                     this.enemigo3.tiempoGolpe =0; 
                     if(vidas.size() >= 1)
                         this.vidas.remove(vidas.size() -1 ); 
@@ -403,7 +417,7 @@ public class Nivel2 implements Screen {
             
             if(this.man.tiempo >= 0.4f && man.getPegar() == true){
                 
-                this.enemigo.setyVelocity(-500);
+                this.enemigo.setPosition(-500,-500);
                
                 if (enemigo.getY()<=0) {
                     this.enemigo.remove(); 
@@ -491,14 +505,25 @@ public class Nivel2 implements Screen {
         bomba.setPosition(57, 9);
         
         bomba.xVelocity = -6f;
-        bomba.yVelocity = man.getY() - 10; 
+        
+        if (man.getY() < bomba.getY()) {
+            bomba.yVelocity=-2f;
+        }
+        
+        else if (man.getY() == bomba.getY()) {
+            bomba.yVelocity = 0;
+        }
+        
+        else if (man.getY()>bomba.getY()) {
+            bomba.yVelocity = 2f;
+        }
        
         bombas.add(bomba);
         
         stage.addActor(bombas.get(this.cantBombas));
        
         this.cantBombas++; 
-        
+        c.destriuda= false; 
         return bombas.get(this.cantBombas -1 );
         
     }
